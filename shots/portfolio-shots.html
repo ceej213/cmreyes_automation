@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Portfolio graphics</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B0E14; --panel:#111726; --panel2:#0E1420; --line:rgba(255,255,255,.09);
+    --line2:rgba(255,255,255,.055); --fg:#EAF1FF; --muted:#93A0B8; --faint:#66748C;
+    --accent:#3B6FE0; --accent-soft:rgba(59,111,224,.13); --gold:#C8A24C; --gold-soft:rgba(200,162,76,.13);
+    --good:#22D3A5; --good-soft:rgba(34,211,165,.12); --warn:#F0B23A;
+    --mono:'JetBrains Mono',ui-monospace,monospace;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:#05070C;font-family:'Hanken Grotesk',ui-sans-serif,system-ui,sans-serif;color:var(--fg);
+    display:flex;flex-direction:column;align-items:center;gap:40px;padding:40px}
+  .shot{width:1400px;height:880px;background:
+      radial-gradient(120% 90% at 12% 0%, rgba(59,111,224,.14), transparent 58%),
+      linear-gradient(180deg,#0C1119,#0A0E16);
+    border:1px solid var(--line);display:flex;flex-direction:column;padding:54px 58px 74px;gap:34px;overflow:hidden;position:relative}
+  .shot.gold{background:
+      radial-gradient(120% 90% at 12% 0%, rgba(200,162,76,.15), transparent 58%),
+      linear-gradient(180deg,#0C1119,#0A0E16)}
+  .eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--accent);margin:0}
+  .gold .eyebrow{color:var(--gold)}
+  h1{font-family:'Space Grotesk',sans-serif;font-size:44px;line-height:1.1;letter-spacing:-.025em;font-weight:700;margin:10px 0 0}
+  .sub{margin:14px 0 0;font-size:20px;line-height:1.5;color:var(--muted);max-width:1080px;text-wrap:pretty}
+  .head{flex:none}
+
+  /* flow diagram */
+  .flow{display:flex;align-items:stretch;gap:0;flex:1}
+  .col{flex:1;display:flex;flex-direction:column;gap:14px;min-width:0}
+  .arrow{flex:none;width:52px;display:flex;align-items:center;justify-content:center;color:var(--faint);font-size:26px}
+  .node{background:var(--panel);border:1px solid var(--line);border-radius:16px;padding:20px 22px;display:flex;
+    flex-direction:column;gap:8px}
+  .node .t{font-family:'Space Grotesk',sans-serif;font-size:19px;font-weight:600;letter-spacing:-.01em}
+  .node .d{font-size:15px;line-height:1.5;color:var(--muted)}
+  .node.accent{border-color:rgba(59,111,224,.42);background:linear-gradient(180deg,rgba(59,111,224,.13),var(--panel))}
+  .node.goldn{border-color:rgba(200,162,76,.42);background:linear-gradient(180deg,rgba(200,162,76,.13),var(--panel))}
+  .node.good{border-color:rgba(34,211,165,.4);background:linear-gradient(180deg,rgba(34,211,165,.1),var(--panel))}
+  .cap{font-size:12.5px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin:0 0 2px}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:13.5px;font-weight:600;color:var(--accent);background:var(--accent-soft);
+    border:1px solid rgba(59,111,224,.24);border-radius:8px;padding:6px 11px}
+  .gold .chip{color:var(--gold);background:var(--gold-soft);border-color:rgba(200,162,76,.26)}
+  .chip.plain{color:var(--muted);background:rgba(255,255,255,.04);border-color:var(--line)}
+
+  /* app mock */
+  .win{flex:1;background:var(--panel2);border:1px solid var(--line);border-radius:18px;overflow:hidden;display:flex;flex-direction:column}
+  .bar{flex:none;height:46px;display:flex;align-items:center;gap:9px;padding:0 18px;background:rgba(255,255,255,.03);
+    border-bottom:1px solid var(--line)}
+  .dot{width:11px;height:11px;border-radius:50%;background:#2B3murky}
+  .dot{background:rgba(255,255,255,.16)}
+  .url{margin-left:14px;font-family:var(--mono);font-size:12.5px;color:var(--faint)}
+  .body2{flex:1;display:flex;min-height:0}
+
+  /* chat */
+  .chat{flex:1;display:flex;flex-direction:column;gap:16px;padding:26px 30px;min-width:0}
+  .msg{max-width:76%;padding:15px 18px;border-radius:16px;font-size:16.5px;line-height:1.5}
+  .msg.bot{align-self:flex-start;background:var(--panel);border:1px solid var(--line);border-bottom-left-radius:6px}
+  .msg.usr{align-self:flex-end;background:rgba(200,162,76,.16);border:1px solid rgba(200,162,76,.34);border-bottom-right-radius:6px}
+  .side{flex:none;width:392px;border-left:1px solid var(--line);padding:26px 28px;display:flex;flex-direction:column;gap:16px;
+    background:rgba(255,255,255,.015)}
+  .kvrow{display:flex;flex-direction:column;gap:4px}
+  .kvrow dt{font-size:11.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--faint)}
+  .kvrow dd{margin:0;font-size:17px;font-weight:600}
+  .seg{display:inline-flex;background:rgba(18,22,31,.92);border:1px solid rgba(200,162,76,.35);border-radius:999px;padding:5px;gap:3px}
+  .seg span{font-size:14px;padding:8px 16px;border-radius:999px;color:#C9D1DC}
+  .seg span.on{background:var(--gold);color:#12161F;font-weight:600}
+
+  /* lead cards */
+  .leads{display:flex;flex-direction:column;gap:16px;padding:26px 30px;flex:1}
+  .lead{display:flex;align-items:center;gap:22px;background:var(--panel);border:1px solid var(--line);border-radius:14px;padding:18px 22px}
+  .score{flex:none;width:74px;height:74px;border-radius:14px;display:flex;flex-direction:column;align-items:center;
+    justify-content:center;font-family:'Space Grotesk',sans-serif;font-weight:700;font-size:27px;line-height:1}
+  .score small{font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;opacity:.75;margin-top:4px}
+  .s-hot{background:rgba(240,90,90,.16);border:1px solid rgba(240,90,90,.45);color:#FF8B8B}
+  .s-warm{background:rgba(240,178,58,.14);border:1px solid rgba(240,178,58,.42);color:var(--warn)}
+  .s-cold{background:rgba(147,160,184,.12);border:1px solid rgba(147,160,184,.3);color:var(--muted)}
+  .lead .who{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+  .lead .who b{font-size:18.5px;font-weight:600}
+  .lead .who span{font-size:14.5px;color:var(--muted)}
+  .route{flex:none;text-align:right;display:flex;flex-direction:column;gap:5px}
+  .route b{font-size:15.5px;font-weight:600}
+  .route span{font-size:13px;color:var(--faint);font-family:var(--mono)}
+
+  /* invoice result */
+  .res{flex:1;display:flex;gap:26px;padding:26px 30px;min-height:0}
+  .banner{display:flex;flex-direction:column;gap:5px;background:var(--good-soft);border:1px solid rgba(34,211,165,.4);
+    border-radius:12px;padding:15px 18px;margin-bottom:18px}
+  .banner b{font-size:18px;color:var(--good);font-weight:600}
+  .banner span{font-size:14.5px;color:var(--muted)}
+  .kv{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--line2);border:1px solid var(--line2);
+    border-radius:10px;overflow:hidden}
+  .kv>div{background:var(--panel);padding:12px 15px}
+  .kv dt{font-size:11px;text-transform:uppercase;letter-spacing:.07em;color:var(--faint);margin-bottom:5px}
+  .kv dd{margin:0;font-size:17px;font-weight:600}
+  .kv dd.num{font-family:var(--mono);font-weight:500}
+  table{width:100%;border-collapse:collapse;font-size:15px}
+  th{text-align:left;font-size:11px;letter-spacing:.07em;text-transform:uppercase;color:var(--faint);
+    padding:0 0 9px;border-bottom:1px solid var(--line2);font-weight:600}
+  td{padding:11px 0;border-bottom:1px solid var(--line2);color:var(--fg)}
+  td.n{text-align:right;font-family:var(--mono);font-size:14px}
+  .checks{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:11px}
+  .checks li{display:flex;gap:11px;align-items:flex-start;font-size:15px;color:var(--muted)}
+  .checks .mk{flex:none;width:21px;height:21px;border-radius:6px;background:var(--good-soft);color:var(--good);
+    border:1px solid rgba(34,211,165,.4);display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:700}
+  .foot{display:flex;gap:16px;flex-wrap:wrap;font-family:var(--mono);font-size:12.5px;color:var(--faint);margin-top:16px}
+  .stat{display:flex;flex-direction:column;gap:6px;background:var(--panel);border:1px solid var(--line);
+    border-radius:14px;padding:18px 20px;flex:1}
+  .stat b{font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em}
+  .stat span{font-size:14px;color:var(--muted);line-height:1.45}
+  .row{display:flex;gap:16px;flex:none}
+  .brandmark{position:absolute;right:52px;bottom:28px;font-family:'Space Grotesk',sans-serif;font-size:14px;
+    font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.2)}
+</style>
+</head>
+<body>
+
+<!-- ============ 1. ISABEL — architecture ============ -->
+<div class="shot gold" id="isabel-flow">
+  <div class="head">
+    <p class="eyebrow">Isabel Law Firm · Voice + chat intake agent</p>
+    <h1>One agent, two front doors — every enquiry answered on the spot</h1>
+    <p class="sub">The same intake brain sits behind the phone line and the website widget, so a caller at 11pm and a visitor on the contact page get an identical, qualified intake.</p>
+  </div>
+  <div class="flow">
+    <div class="col">
+      <p class="cap">Front door</p>
+      <div class="node goldn"><span class="t">Voice</span><span class="d">ElevenLabs conversational agent answers the call</span></div>
+      <div class="node goldn"><span class="t">Chat</span><span class="d">Site widget, text-only mode</span></div>
+      <div class="node goldn"><span class="t">Voice + chat</span><span class="d">Visitor picks either, mid-session</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Intake brain</p>
+      <div class="node accent" style="flex:1;justify-content:center">
+        <span class="t">Claude intake agent</span>
+        <span class="d">Greets, identifies the matter type, captures the facts the firm needs to screen it, and keeps the tone the firm would use.</span>
+        <div class="chips" style="margin-top:6px">
+          <span class="chip">Matter type</span><span class="chip">Contact details</span><span class="chip">Urgency</span>
+        </div>
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Tools it can call</p>
+      <div class="node"><span class="t">Check availability</span><span class="d">Consultation slots, live</span></div>
+      <div class="node"><span class="t">Book consultation</span><span class="d">Calendar hold + confirmation</span></div>
+      <div class="node"><span class="t">Log the enquiry</span><span class="d">Structured record, not a voicemail</span></div>
+      <div class="node good"><span class="t">Escalate to a lawyer</span><span class="d">Anything urgent or sensitive</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">System of record</p>
+      <div class="node" style="flex:1;justify-content:center">
+        <span class="t">Supabase</span>
+        <span class="d">Every enquiry, transcript, and booking in one table the firm can work from in the morning.</span>
+        <div class="chips" style="margin-top:6px"><span class="chip plain">n8n orchestration</span><span class="chip plain">PostgreSQL</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brandmark">CMREYES Automation</div>
+</div>
+
+<!-- ============ 2. ISABEL — transcript mock ============ -->
+<div class="shot gold" id="isabel-chat">
+  <div class="head">
+    <p class="eyebrow">Isabel Law Firm · Live demo</p>
+    <h1>A real intake, captured in four exchanges</h1>
+  </div>
+  <div class="win">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">isabel-law.demo — Voice · Chat · Voice + Chat</span></div>
+    <div class="body2">
+      <div class="chat">
+        <div class="seg" style="margin-bottom:4px"><span>Voice</span><span>Chat</span><span class="on">Voice + Chat</span></div>
+        <div class="msg bot">Good evening, you've reached Isabel Law. I can take some details and get you in front of the right lawyer — may I ask what the matter concerns?</div>
+        <div class="msg usr">I was rear-ended last Tuesday and the other driver's insurer is already calling me.</div>
+        <div class="msg bot">I'm sorry — that sounds stressful. That would be a personal injury matter. Before you speak to their insurer again, let's get you a consultation. Was anyone treated for injuries?</div>
+        <div class="msg usr">Yes, I went to A&amp;E that evening. Whiplash.</div>
+        <div class="msg bot">Noted. I have Thursday at 10:00 or Friday at 14:30 with Atty. Reyes, both 45 minutes. Which suits you?</div>
+      </div>
+      <div class="side">
+        <p class="cap" style="margin:0">Captured this call</p>
+        <div class="kvrow"><dt>Matter type</dt><dd>Personal injury — road traffic</dd></div>
+        <div class="kvrow"><dt>Incident date</dt><dd>Last Tuesday</dd></div>
+        <div class="kvrow"><dt>Medical treatment</dt><dd>Yes — A&amp;E, whiplash</dd></div>
+        <div class="kvrow"><dt>Third party contact</dt><dd>Insurer already calling</dd></div>
+        <div class="kvrow"><dt>Urgency</dt><dd style="color:var(--warn)">Elevated — flag to lawyer</dd></div>
+        <div class="kvrow"><dt>Next step</dt><dd>Consultation offered ×2</dd></div>
+        <div style="margin-top:auto;padding-top:16px;border-top:1px solid var(--line)">
+          <div class="chips"><span class="chip">Written to Supabase</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brandmark">CMREYES Automation</div>
+</div>
+
+<!-- ============ 3. LEAD ROUTER — flow ============ -->
+<div class="shot" id="router-flow">
+  <div class="head">
+    <p class="eyebrow">AI lead router · n8n</p>
+    <h1>Read, score, route — before anyone opens the inbox</h1>
+    <p class="sub">One workflow stands between every inbound enquiry and the team: it normalises the payload, scores fit and urgency with Claude, then sends each lead down the track it deserves — with the reasoning kept alongside the score.</p>
+  </div>
+  <div class="flow">
+    <div class="col">
+      <p class="cap">Inbound</p>
+      <div class="node"><span class="t">Web form</span><span class="d">Webhook, instant</span></div>
+      <div class="node"><span class="t">Email enquiry</span><span class="d">Gmail trigger</span></div>
+      <div class="node"><span class="t">Ad / landing page</span><span class="d">Campaign + source kept</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Normalise</p>
+      <div class="node" style="flex:1;justify-content:center"><span class="t">One shape for every source</span><span class="d">Name, contact, company, message, source and campaign mapped into a single record before anything is judged.</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Score</p>
+      <div class="node accent" style="flex:1;justify-content:center">
+        <span class="t">Claude scores the lead</span>
+        <span class="d">Fit against the ideal customer, urgency in the wording, and budget signals — returned as a score, a tier, and a one-line reason.</span>
+        <div class="chips" style="margin-top:6px"><span class="chip">Fit</span><span class="chip">Urgency</span><span class="chip">Reason</span></div>
+      </div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Route</p>
+      <div class="node" style="border-color:rgba(240,90,90,.4)"><span class="t" style="color:#FF8B8B">Hot → rep now</span><span class="d">Assigned, alerted, follow-up task set</span></div>
+      <div class="node" style="border-color:rgba(240,178,58,.38)"><span class="t" style="color:var(--warn)">Warm → nurture</span><span class="d">Sequence matched to the need</span></div>
+      <div class="node"><span class="t" style="color:var(--muted)">Cold → list</span><span class="d">Logged, no rep time spent</span></div>
+      <div class="node good"><span class="t">Every decision logged</span><span class="d">Score + reason, auditable</span></div>
+    </div>
+  </div>
+  <div class="brandmark">CMREYES Automation</div>
+</div>
+
+<!-- ============ 4. LEAD ROUTER — scored leads ============ -->
+<div class="shot" id="router-leads">
+  <div class="head">
+    <p class="eyebrow">AI lead router · Output</p>
+    <h1>What the team sees instead of a raw inbox</h1>
+  </div>
+  <div class="win">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">n8n · lead-router · executions</span></div>
+    <div class="leads">
+      <div class="lead">
+        <div class="score s-hot">92<small>Hot</small></div>
+        <div class="who"><b>Operations lead · 40-site logistics firm</b><span>"Our dispatch team retypes 300 orders a week — we need this fixed this quarter."</span></div>
+        <div class="route"><b style="color:#FF8B8B">Assigned to rep</b><span>alert sent · 6s</span></div>
+      </div>
+      <div class="lead">
+        <div class="score s-warm">61<small>Warm</small></div>
+        <div class="who"><b>Founder · 8-person agency</b><span>"Curious what automating client onboarding would cost us."</span></div>
+        <div class="route"><b style="color:var(--warn)">Nurture sequence</b><span>track: pricing · day 0</span></div>
+      </div>
+      <div class="lead">
+        <div class="score s-cold">24<small>Cold</small></div>
+        <div class="who"><b>Student · research enquiry</b><span>"Writing a paper on AI adoption, can you answer a few questions?"</span></div>
+        <div class="route"><b style="color:var(--muted)">Logged only</b><span>no rep time</span></div>
+      </div>
+      <div class="row" style="margin-top:auto">
+        <div class="stat"><b>Seconds</b><span>From submission to a rep being alerted on a hot lead</span></div>
+        <div class="stat"><b>3 tiers</b><span>Each with its own owner, sequence, and follow-up clock</span></div>
+        <div class="stat"><b>Every reason kept</b><span>The score is never a black box — the why is stored with it</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="brandmark">CMREYES Automation</div>
+</div>
+
+<!-- ============ 5. INVOICE — pipeline ============ -->
+<div class="shot" id="invoice-flow">
+  <div class="head">
+    <p class="eyebrow">Invoice &amp; document intelligence</p>
+    <h1>The AI reads it. Ordinary code does the maths.</h1>
+    <p class="sub">Language models are excellent at reading a messy scan and the wrong thing to trust with money — so the split is strict: Claude transcribes what is printed, and deterministic code checks every sum in integer cents.</p>
+  </div>
+  <div class="flow">
+    <div class="col">
+      <p class="cap">In</p>
+      <div class="node" style="flex:1;justify-content:center"><span class="t">Drop an invoice</span><span class="d">PDF, PNG, JPEG, WebP or GIF — from the inbox or the upload page.</span><div class="chips" style="margin-top:6px"><span class="chip plain">max 3 MB</span></div></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Extract</p>
+      <div class="node accent" style="flex:1;justify-content:center"><span class="t">Claude extraction</span><span class="d">Vendor, invoice number, dates, currency, totals and every line item — transcribed, never "corrected".</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Verify — in code</p>
+      <div class="node"><span class="t">Required fields present</span><span class="d">Nothing silently missing</span></div>
+      <div class="node"><span class="t">Line item maths</span><span class="d">qty × unit price, per row</span></div>
+      <div class="node"><span class="t">Sums reconcile</span><span class="d">Lines → subtotal → total, in cents</span></div>
+      <div class="node" style="border-color:rgba(240,178,58,.4)"><span class="t" style="color:var(--warn)">Duplicate defence</span><span class="d">Keyed on vendor + invoice number — a re-scan updates the record, it never adds one</span></div>
+    </div>
+    <div class="arrow">→</div>
+    <div class="col">
+      <p class="cap">Out</p>
+      <div class="node good" style="flex:1;justify-content:center"><span class="t">Ledger record</span><span class="d">Clean invoices are written straight to Airtable. Anything that fails a check is held for review with the failure named — a finding, not a quiet fix.</span></div>
+    </div>
+  </div>
+  <div class="brandmark">CMREYES Automation</div>
+</div>
+
+<!-- ============ 6. INVOICE — result panel ============ -->
+<div class="shot" id="invoice-result">
+  <div class="head">
+    <p class="eyebrow">Invoice intelligence · Result</p>
+    <h1>Checked data out, in about five seconds</h1>
+  </div>
+  <div class="win">
+    <div class="bar"><span class="dot"></span><span class="dot"></span><span class="dot"></span><span class="url">doc-iq-extract · 2 · Result</span></div>
+    <div class="res">
+      <div style="flex:1.15;min-width:0;display:flex;flex-direction:column">
+        <div class="banner"><b>✓ Extracted and validated</b><span>Every check passed. The invoice was written to the ledger.</span></div>
+        <div class="kv">
+          <div><dt>Vendor</dt><dd>ACME Industrial Supply</dd></div>
+          <div><dt>Invoice number</dt><dd class="num">INV-1042</dd></div>
+          <div><dt>Invoice date</dt><dd class="num">2026-06-14</dd></div>
+          <div><dt>Due date</dt><dd class="num">2026-07-14</dd></div>
+          <div><dt>Subtotal</dt><dd class="num">USD 1,250.00</dd></div>
+          <div><dt>Tax</dt><dd class="num">USD 106.25</dd></div>
+        </div>
+        <div style="display:flex;justify-content:space-between;align-items:baseline;margin:18px 0 14px">
+          <span class="cap" style="margin:0">Total</span>
+          <span style="font-family:'Space Grotesk',sans-serif;font-size:30px;font-weight:700;letter-spacing:-.02em">USD 1,356.25</span>
+        </div>
+        <table>
+          <tr><th>Line item</th><th class="n" style="text-align:right">Qty</th><th class="n" style="text-align:right">Unit</th><th class="n" style="text-align:right">Amount</th></tr>
+          <tr><td>Steel brackets, 40mm</td><td class="n">50</td><td class="n">12.50</td><td class="n">625.00</td></tr>
+          <tr><td>Hex bolts M8 (box of 100)</td><td class="n">5</td><td class="n">45.00</td><td class="n">225.00</td></tr>
+          <tr><td>Delivery surcharge</td><td class="n">1</td><td class="n">400.00</td><td class="n">400.00</td></tr>
+        </table>
+      </div>
+      <div style="flex:.85;min-width:0;display:flex;flex-direction:column;border-left:1px solid var(--line);padding-left:26px">
+        <p class="cap" style="margin:0 0 14px">Checks run in code</p>
+        <ul class="checks">
+          <li><span class="mk">✓</span><span>Required fields present</span></li>
+          <li><span class="mk">✓</span><span>Dates sane — invoice before due date</span></li>
+          <li><span class="mk">✓</span><span>Line item maths, row by row</span></li>
+          <li><span class="mk">✓</span><span>Line items sum matches subtotal</span></li>
+          <li><span class="mk">✓</span><span>Subtotal + tax matches total</span></li>
+          <li><span class="mk">✓</span><span>No duplicate for this vendor + number</span></li>
+        </ul>
+        <p class="cap" style="margin:26px 0 12px">Anomalies</p>
+        <p style="margin:0;font-size:15px;color:var(--muted)">None. Had a sum disagreed by a single cent, this invoice would be sitting in review with the failing check named.</p>
+        <div class="foot" style="margin-top:auto">
+          <span>3 line items</span><span>5.4s end-to-end</span><span>status: 200</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="brandmark">CMREYES Automation</div>
+</div>
+
+</body>
+</html>
