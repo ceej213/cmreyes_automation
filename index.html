@@ -258,8 +258,17 @@
             <input type="email" placeholder="Your email" value="{{ ctEmail }}" onChange="{{ onCtEmail }}" style="font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 15px; color: var(--fg); background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; outline: none; transition: border-color .15s ease" style-focus="border-color: var(--accent2)">
           </div>
           <textarea placeholder="What would you like to automate?" rows="4" value="{{ ctMsg }}" onChange="{{ onCtMsg }}" style="font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5; color: var(--fg); background: var(--panel2); border: 1px solid var(--line); border-radius: 12px; padding: 13px 15px; outline: none; resize: vertical; transition: border-color .15s ease" style-focus="border-color: var(--accent2)"></textarea>
-          <button onClick="{{ sendEmail }}" class="btn-press" style="font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #fff; background: linear-gradient(120deg, var(--accent), var(--accent2)); border: none; cursor: pointer; padding: 15px 30px; border-radius: 999px; box-shadow: 0 10px 26px rgba(59,111,224,0.45); transition: transform .15s ease, box-shadow .15s ease" style-hover="transform: translateY(-2px); box-shadow: 0 16px 34px rgba(59,111,224,0.55)">Send message</button>
-          <span style="font-size: 12.5px; color: var(--faint); text-align: center">Opens your email app with the message pre-filled, addressed to cmreyes@cmr-automation.com</span>
+          <button onClick="{{ sendEmail }}" class="btn-press" style="font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 16px; font-weight: 600; color: #fff; background: linear-gradient(120deg, var(--accent), var(--accent2)); border: none; cursor: pointer; padding: 15px 30px; border-radius: 999px; box-shadow: 0 10px 26px rgba(59,111,224,0.45); transition: transform .15s ease, box-shadow .15s ease" style-hover="transform: translateY(-2px); box-shadow: 0 16px 34px rgba(59,111,224,0.55)">{{ sendLabel }}</button>
+          <input type="text" tabindex="-1" autocomplete="off" aria-hidden="true" value="{{ ctBotcheck }}" onChange="{{ onCtBotcheck }}" style="position: absolute; left: -9999px; width: 1px; height: 1px; opacity: 0; pointer-events: none">
+          <sc-if value="{{ ctIdle }}" hint-placeholder-val="{{ true }}">
+            <span style="font-size: 12.5px; color: var(--faint); text-align: center">Goes straight to cmreyes@cmr-automation.com — I'll reply within a day.</span>
+          </sc-if>
+          <sc-if value="{{ ctSent }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size: 13.5px; font-weight: 600; color: #34D399; text-align: center">✓ Message sent — I'll get back to you within a day.</span>
+          </sc-if>
+          <sc-if value="{{ ctFailed }}" hint-placeholder-val="{{ false }}">
+            <span style="font-size: 13.5px; font-weight: 500; color: #F87171; text-align: center">{{ ctNote }}</span>
+          </sc-if>
         </div>
         <div style="display: flex; align-items: center; gap: 12px; flex-wrap: wrap; justify-content: center; margin-top: 6px">
           <a href="mailto:cmreyes@cmr-automation.com" class="btn-press" style="font-size: 14.5px; font-weight: 600; color: var(--fg); background: var(--panel2); border: 1px solid var(--line2); padding: 11px 22px; border-radius: 999px; transition: border-color .15s ease" style-hover="border-color: var(--accent2); color: var(--fg)">✉ cmreyes@cmr-automation.com</a>
@@ -311,7 +320,7 @@
   &quot;showPhone&quot;: { &quot;editor&quot;: &quot;boolean&quot;, &quot;default&quot;: true, &quot;tsType&quot;: &quot;boolean&quot;, &quot;section&quot;: &quot;Contact&quot; }
 }">
 class Component extends DCLogic {
-  state = { ctName: '', ctEmail: '', ctMsg: '', gallery: null, slide: 0, closing: false, active: 'top', theme: (typeof localStorage !== 'undefined' && localStorage.getItem('cmr-theme')) || 'dark' };
+  state = { ctName: '', ctEmail: '', ctMsg: '', ctBotcheck: '', ctStatus: 'idle', ctNote: '', gallery: null, slide: 0, closing: false, active: 'top', theme: (typeof localStorage !== 'undefined' && localStorage.getItem('cmr-theme')) || 'dark' };
 
   static GALLERIES = [
     { title: 'Dapper District — AI Voice Booking Agent', shots: [
@@ -492,6 +501,62 @@ class Component extends DCLogic {
     open: () => { if (p.g === null || p.g === undefined) return; this.setState({ gallery: p.g, slide: 0 }); },
   });
 
+  // Web3Forms delivers the contact form to WEB3FORMS_TO_EMAIL. The access key is a public,
+  // per-endpoint identifier — it is meant to sit in client-side markup and grants no account access.
+  static WEB3FORMS_KEY = 'd349938f-f6d5-4327-b934-17af10d4c786';
+  static WEB3FORMS_TO_EMAIL = 'cmreyes@cmr-automation.com';
+
+  _submitContact() {
+    if (this.state.ctStatus === 'sending') return;
+    const name = this.state.ctName.trim();
+    const email = this.state.ctEmail.trim();
+    const message = this.state.ctMsg.trim();
+
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      this.setState({ ctStatus: 'error', ctNote: 'Please enter a valid email so I can reply.' });
+      return;
+    }
+    if (!message) {
+      this.setState({ ctStatus: 'error', ctNote: 'Tell me a little about what you want to automate.' });
+      return;
+    }
+    // Honeypot: real people never fill a hidden field.
+    if (this.state.ctBotcheck) return;
+
+    this.setState({ ctStatus: 'sending', ctNote: '' });
+
+    fetch('https://api.web3forms.com/submit', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify({
+        access_key: Component.WEB3FORMS_KEY,
+        subject: name ? `Automation inquiry from ${name}` : 'Automation inquiry',
+        from_name: 'CMREYES Automation site',
+        name: name || 'Not given',
+        email,
+        message,
+        botcheck: '',
+      }),
+    })
+      .then((res) => res.json().then((data) => ({ ok: res.ok, data })))
+      .then(({ ok, data }) => {
+        if (ok && data.success) {
+          this.setState({ ctStatus: 'sent', ctNote: '', ctName: '', ctEmail: '', ctMsg: '' });
+        } else {
+          this.setState({
+            ctStatus: 'error',
+            ctNote: (data && data.message) || 'Something went wrong. Please email me directly.',
+          });
+        }
+      })
+      .catch(() => {
+        this.setState({
+          ctStatus: 'error',
+          ctNote: 'Could not reach the server. Please email me directly at ' + Component.WEB3FORMS_TO_EMAIL + '.',
+        });
+      });
+  }
+
   renderVals() {
     const g = this.state.gallery === null ? null : Component.GALLERIES[this.state.gallery];
     const shot = g ? g.shots[this.state.slide] : null;
@@ -543,12 +608,14 @@ class Component extends DCLogic {
       onCtName: (e) => this.setState({ ctName: e.target.value }),
       onCtEmail: (e) => this.setState({ ctEmail: e.target.value }),
       onCtMsg: (e) => this.setState({ ctMsg: e.target.value }),
-      sendEmail: () => {
-        const { ctName, ctEmail, ctMsg } = this.state;
-        const subject = encodeURIComponent(ctName ? `Automation inquiry from ${ctName}` : 'Automation inquiry');
-        const body = encodeURIComponent(`${ctMsg}\n\n— ${ctName}${ctEmail ? ` (${ctEmail})` : ''}`);
-        window.location.href = `mailto:cmreyes@cmr-automation.com?subject=${subject}&body=${body}`;
-      },
+      ctBotcheck: this.state.ctBotcheck,
+      onCtBotcheck: (e) => this.setState({ ctBotcheck: e.target.value }),
+      ctIdle: this.state.ctStatus === 'idle' || this.state.ctStatus === 'sending',
+      ctSent: this.state.ctStatus === 'sent',
+      ctFailed: this.state.ctStatus === 'error',
+      ctNote: this.state.ctNote,
+      sendLabel: this.state.ctStatus === 'sending' ? 'Sending…' : 'Send message',
+      sendEmail: () => this._submitContact(),
     };
   }
 }

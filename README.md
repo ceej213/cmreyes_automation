@@ -15,6 +15,23 @@ Live: deployed as a Render static site from this repo.
 | `render.yaml` | Render blueprint (static site, publish path `.`) |
 | `DESIGN-HANDOFF.md` | Original design spec — tokens, layout, copy, motion curves |
 
+## Contact form
+
+The contact form posts to [Web3Forms](https://web3forms.com), which relays submissions to
+`cmreyes@cmr-automation.com`. No backend required.
+
+The access key lives in `index.html` as `Component.WEB3FORMS_KEY`. Web3Forms access keys are
+**public by design** — they sit in client-side markup on every site that uses the service and are
+visible in page source. The key only permits submitting to this form; it grants no account access,
+so it is not a secret and does not belong in an env var.
+
+Behaviour: validates a well-formed email and a non-empty message before sending, shows a `Sending…`
+button state, clears the form on success, and on failure tells the visitor to email directly. A
+hidden honeypot field (`botcheck`) catches naive spam bots.
+
+To point submissions at a different address, change the recipient on the Web3Forms dashboard for
+that key — not in this repo.
+
 ## Running locally
 
 ```bash
