@@ -1,0 +1,269 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CMREYES Coaching | 1-on-1 running coaching</title>
+<meta name="description" content="1-on-1 running coaching from a UESCA certified coach. I build your training around your goal, your schedule, and your actual fitness.">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 64 64%22%3E%3Crect width=%2264%22 height=%2264%22 rx=%2212%22 fill=%22%231A1D17%22/%3E%3Ctext x=%2232%22 y=%2245%22 text-anchor=%22middle%22 font-family=%22Arial Narrow%2CArial%2Csans-serif%22 font-weight=%22800%22 font-size=%2236%22 fill=%22%23D6E128%22%3ECM%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Barlow+Semi+Condensed:wght@400;500;600;700&display=swap">
+<style>
+:root{
+  --paper:#F4F5F0; --ink:#1A1D17; --ink2:#20240A; --lime:#D6E128; --lime-hi:#E3EC4A;
+  --mute:#63665C; --rule:#E0E2D6; --field:#FFFFFF; --danger:#B3261E;
+  --cond:"Barlow Condensed","Arial Narrow",Impact,sans-serif;
+  --semi:"Barlow Semi Condensed","Arial Narrow",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{background:var(--paper);color:var(--ink);font-family:var(--semi);font-size:18px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{width:100%;max-width:1080px;margin:0 auto;padding:0 24px}
+h1,h2{font-family:var(--cond);font-weight:800;text-transform:uppercase;line-height:.9;letter-spacing:.005em}
+.eyebrow{font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+section{padding:72px 0;border-top:1px solid var(--rule);scroll-margin-top:64px}
+
+/* bar */
+.bar{position:sticky;top:0;z-index:10;background:rgba(244,245,240,.92);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);border-bottom:1px solid var(--rule)}
+.bar .wrap{display:flex;align-items:center;justify-content:space-between;height:64px}
+.brand{font-family:var(--cond);font-weight:800;font-size:24px;letter-spacing:.02em;text-transform:uppercase;color:var(--ink);text-decoration:none}
+.brand span{color:var(--mute);font-weight:700}
+
+/* buttons */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 30px;border:0;border-radius:999px;background:var(--lime);color:var(--ink2);font-family:var(--cond);font-weight:800;font-size:22px;letter-spacing:.03em;text-transform:uppercase;text-decoration:none;cursor:pointer;transition:transform .12s cubic-bezier(.32,.72,0,1),background .12s}
+.btn:hover{background:var(--lime-hi)}
+.btn:active{transform:translateY(1px) scale(.985)}
+.btn.sm{height:42px;padding:0 22px;font-size:18px}
+.btn:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,.pill input:focus-visible+span{outline:3px solid var(--ink);outline-offset:3px}
+.btn[disabled]{opacity:.6;cursor:default}
+
+/* hero */
+.hero{border-top:0;padding:64px 0 80px}
+.tag{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;padding:8px 13px;border-radius:5px;background:var(--lime);color:var(--ink2)}
+.tag svg{width:15px;height:15px}
+h1{margin-top:28px;font-size:clamp(64px,12.4vw,148px)}
+h1 .hi{display:inline-block;background:var(--lime);color:var(--ink2);padding:.04em .14em 0;margin-left:-.06em}
+.sub{margin-top:28px;max-width:30em;font-size:clamp(19px,2.4vw,24px);line-height:1.4;font-weight:500}
+.cta{margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;gap:16px 22px}
+.cta small{font-size:16px;color:var(--mute);font-weight:500}
+
+/* what you get */
+h2{font-size:clamp(40px,6vw,64px)}
+.groups{margin-top:36px;display:grid;grid-template-columns:1fr 1fr;gap:0 48px}
+.glabel{padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.row{display:flex;align-items:center;gap:14px;padding:15px 0;border-bottom:1px solid var(--rule);font-family:var(--cond);font-weight:700;font-size:25px;text-transform:uppercase;letter-spacing:.01em;line-height:1.05}
+.row i{flex:0 0 auto;width:28px;height:28px;border-radius:50%;background:var(--ink);display:flex;align-items:center;justify-content:center}
+.row i svg{width:15px;height:15px;color:var(--lime)}
+
+/* how coaching starts */
+.fgroups{margin-top:36px;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.fgroups span{padding-bottom:10px;border-bottom:3px solid var(--ink);font-size:13px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;color:var(--mute)}
+.fgroups .g1{grid-column:span 2;color:var(--ink)}
+.fgroups .g1 b{background:var(--lime);color:var(--ink2);padding:3px 8px 2px;border-radius:4px;margin-right:8px}
+.fgroups .g2{grid-column:span 3}
+.flow{margin-top:14px;display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+.fstep{position:relative;display:flex;flex-direction:column;padding:20px 18px 22px;border:2px solid var(--ink);border-radius:14px;background:var(--field)}
+.fstep:not(:last-child):after{content:"";position:absolute;right:-15px;top:38px;width:9px;height:9px;border-top:2.5px solid var(--ink);border-right:2.5px solid var(--ink);transform:rotate(45deg)}
+.fhead{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.fnum{width:40px;height:40px;border-radius:50%;background:var(--ink);color:var(--lime);display:flex;align-items:center;justify-content:center;font-family:var(--cond);font-weight:800;font-size:24px;line-height:1}
+.fdur{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+.fstep h3{margin-top:16px;font-family:var(--cond);font-weight:800;font-size:23px;line-height:1.02;text-transform:uppercase;letter-spacing:.005em}
+.fstep p{margin-top:8px;font-size:16px;line-height:1.35;color:var(--mute)}
+.fstep.free{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.fstep.free .fnum{background:var(--lime);color:var(--ink2)}
+.fstep.free .fdur{color:rgba(244,245,240,.7)}
+.fstep.free p{color:rgba(244,245,240,.8)}
+.fstep.free a{color:var(--lime);text-underline-offset:3px}
+.ffree{align-self:flex-start;margin-top:16px;font-family:var(--cond);font-weight:800;font-size:34px;line-height:1;letter-spacing:.02em;text-transform:uppercase;background:var(--lime);color:var(--ink2);padding:4px 12px 2px;border-radius:6px}
+.fstep.free h3{margin-top:10px}
+.motto{margin-top:40px;font-family:var(--cond);font-weight:800;font-size:clamp(28px,4vw,46px);line-height:1.08;text-transform:uppercase}
+.motto span{background:var(--lime);color:var(--ink2);padding:0 .18em;box-decoration-break:clone;-webkit-box-decoration-break:clone}
+
+/* apply */
+.intro{margin-top:18px;max-width:34em;color:var(--mute)}
+form{margin-top:40px;display:grid;grid-template-columns:1fr 1fr;gap:20px 24px}
+.f{display:flex;flex-direction:column;gap:7px}
+.f.full{grid-column:1/-1}
+label,.legend{font-size:13px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--mute)}
+label em{font-style:normal;font-weight:500;letter-spacing:.04em;text-transform:none}
+input[type=text],input[type=email],textarea{width:100%;font:inherit;font-size:18px;color:var(--ink);background:var(--field);border:1.5px solid var(--ink);border-radius:10px;padding:14px 16px}
+textarea{min-height:110px;resize:vertical}
+fieldset{border:0}
+.pills{display:flex;flex-wrap:wrap;gap:10px;margin-top:7px}
+.pill{position:relative}
+.pill input{position:absolute;opacity:0;inset:0}
+.pill span{display:inline-flex;align-items:center;height:50px;padding:0 20px;border:1.5px solid var(--ink);border-radius:999px;font-weight:600;background:var(--field);cursor:pointer}
+.pill input:checked+span{background:var(--ink);color:var(--lime)}
+.hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+.actions{grid-column:1/-1;display:flex;flex-wrap:wrap;align-items:center;gap:16px 20px}
+.msg{font-weight:600}
+.msg.err{color:var(--danger)}
+.done{margin-top:40px;padding:32px;border:2px solid var(--ink);border-radius:16px;background:var(--field)}
+.done h3{font-family:var(--cond);font-weight:800;font-size:40px;text-transform:uppercase;line-height:1}
+.done p{margin-top:8px}
+
+footer{border-top:1px solid var(--rule);padding:32px 0 48px;color:var(--mute);font-size:15px}
+footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px}
+footer a{color:var(--ink)}
+
+@media (max-width:960px){
+  .fgroups{display:none}
+  .flow{margin-top:32px}
+  .flow{display:flex;gap:14px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;margin-right:-24px;padding:0 24px 12px 0;scrollbar-width:thin}
+  .fstep{flex:0 0 min(74%,300px);scroll-snap-align:start}
+  .fstep:not(:last-child):after{right:-13px}
+}
+@media (max-width:720px){
+  section{padding:56px 0}
+  .groups,form{grid-template-columns:1fr}
+  .groups{gap:36px 0}
+  .row{font-size:23px}
+  .brand{font-size:21px}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.btn{transition:none}}
+</style>
+</head>
+<body>
+
+<div class="bar"><div class="wrap">
+  <a class="brand" href="#top">CMREYES <span>Coaching</span></a>
+  <a class="btn sm" href="#apply">Apply</a>
+</div></div>
+
+<main id="top">
+<section class="hero"><div class="wrap">
+  <div class="tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2.5l7.5 3.2v5.1c0 4.6-3.1 8.1-7.5 9.7-4.4-1.6-7.5-5.1-7.5-9.7V5.7z"/><path d="M8.6 12.1l2.4 2.4 4.4-4.7"/></svg>UESCA Certified Running Coach</div>
+  <h1>Stop guessing<br>your <span class="hi">training.</span></h1>
+  <p class="sub">I build your training around your goal, your schedule, and your actual fitness.</p>
+  <div class="cta">
+    <a class="btn" href="#apply">Apply for coaching</a>
+    <small>Starts with a free 30-minute call.</small>
+  </div>
+</div></section>
+
+<section id="what"><div class="wrap">
+  <h2>What you get</h2>
+  <div class="groups">
+    <div>
+      <div class="glabel eyebrow">Every week</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Custom training plan</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>1-on-1 check-in call</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Unlimited chat access</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Plan rebuilt when life happens</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Stride PH app access</div>
+    </div>
+    <div>
+      <div class="glabel eyebrow">Every block</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Onboarding + training zones</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Race-day pacing plan</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Progress report every 4 weeks</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Post-race review</div>
+      <div class="row"><i><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 12.5 9.5 18 20 6.5"/></svg></i>Learn to build your own plan</div>
+    </div>
+  </div>
+</div></section>
+
+<section id="how"><div class="wrap">
+  <h2>How coaching starts</h2>
+  <div class="fgroups" aria-hidden="true"><span class="g1"><b>Free</b> No commitment yet</span><span class="g2">Once you decide to start</span></div>
+  <div class="flow" role="list" tabindex="0" aria-label="How coaching starts, 5 steps. Steps 1 and 2 are free with no commitment.">
+    <div class="fstep free" role="listitem"><div class="fhead"><span class="fnum">1</span><span class="fdur">3 minutes</span></div><span class="ffree">Free</span><h3>Answer the form and book a call</h3><p>Fill in <a href="#apply">the form below</a>, then pick a time. No commitment yet.</p></div>
+    <div class="fstep free" role="listitem"><div class="fhead"><span class="fnum">2</span><span class="fdur">30 minutes</span></div><span class="ffree">Free</span><h3>Consultation and assessment call</h3><p>We talk about your goal, your running history, and your week. Still no commitment.</p></div>
+    <div class="fstep" role="listitem"><div class="fhead"><span class="fnum">3</span></div><h3>Agreement and waiver signing</h3><p>If we're a fit, you read it and sign it. This is where you commit.</p></div>
+    <div class="fstep" role="listitem"><div class="fhead"><span class="fnum">4</span><span class="fdur">1 hour</span></div><h3>Onboarding call</h3><p>We set your training zones and how we'll work together.</p></div>
+    <div class="fstep" role="listitem"><div class="fhead"><span class="fnum">5</span></div><h3>Training plan is assigned</h3><p>Daily chat check-ins. Weekly 30-minute call. Progress report every 4 weeks.</p></div>
+  </div>
+  <p class="motto">A coach and athlete relationship. <span>Not just a static training plan.</span></p>
+</div></section>
+
+<section id="apply"><div class="wrap">
+  <h2>Apply</h2>
+  <p class="intro">Tell me where you are and where you want to go. Once you send it, you can book your free 30-minute call with me.</p>
+  <form id="form" novalidate>
+    <div class="f"><label for="name">Full name</label><input id="name" name="name" type="text" autocomplete="name" required></div>
+    <div class="f"><label for="email">Email</label><input id="email" name="email" type="email" autocomplete="email" required></div>
+    <fieldset class="f full"><span class="legend" id="based-l">Where are you based?</span>
+      <div class="pills" role="radiogroup" aria-labelledby="based-l">
+        <label class="pill"><input type="radio" name="based" value="Philippines" required><span>Philippines</span></label>
+        <label class="pill"><input type="radio" name="based" value="Outside the Philippines"><span>Outside the Philippines</span></label>
+      </div>
+    </fieldset>
+    <fieldset class="f full"><span class="legend" id="runs-l">How many times per week can you commit to run?</span>
+      <div class="pills" role="radiogroup" aria-labelledby="runs-l">
+        <label class="pill"><input type="radio" name="runs" value="2" required><span>2</span></label>
+        <label class="pill"><input type="radio" name="runs" value="3"><span>3</span></label>
+        <label class="pill"><input type="radio" name="runs" value="4"><span>4</span></label>
+        <label class="pill"><input type="radio" name="runs" value="5"><span>5</span></label>
+        <label class="pill"><input type="radio" name="runs" value="6+"><span>6+</span></label>
+      </div>
+    </fieldset>
+    <div class="f"><label for="goal">Goal race and date</label><input id="goal" name="goal" type="text" placeholder="e.g. Manila Marathon, March 2027" required></div>
+    <div class="f"><label for="volume">Current weekly distance</label><input id="volume" name="volume" type="text" placeholder="e.g. 25 km" required></div>
+    <div class="f full"><label for="about">Tell me about yourself as a runner</label><textarea id="about" name="about" placeholder="How long you've been running, races you've done, what's worked, what hasn't." required></textarea></div>
+    <div class="f full"><label for="notes">Anything I should know <em>(optional)</em></label><textarea id="notes" name="notes" placeholder="Injuries, schedule limits, why now."></textarea></div>
+    <div class="hp" aria-hidden="true"><label for="company">Company</label><input id="company" name="company" type="text" tabindex="-1" autocomplete="off"></div>
+    <div class="actions"><button class="btn" id="send" type="submit">Send application</button><span class="msg" id="msg" role="status" aria-live="polite"></span></div>
+  </form>
+
+  <div class="done" id="done" hidden>
+    <h3>Got it.</h3>
+    <p data-book-wrap>Last step: pick a time for our free 30-minute call.</p>
+    <a class="btn" id="book" data-book target="_blank" rel="noopener" style="margin-top:18px">Book the call</a>
+    <p data-book-none hidden>I'll message you within 1 business day.</p>
+  </div>
+</div></section>
+</main>
+
+<footer><div class="wrap">
+  <span>CJ Reyes · UESCA Certified Running Coach · Metro Manila</span>
+  <a href="mailto:carlos.javier.reyes21@gmail.com">carlos.javier.reyes21@gmail.com</a>
+</div></footer>
+
+<script>
+const WEBHOOK = "https://n8n.cmr-demo.online/webhook/coaching-apply";
+const EMAIL = "carlos.javier.reyes21@gmail.com";
+const BOOKING_URL = "https://cal.com/carlos-reyes-n8hykc/coaching-assessment"; // 30-minute call, shown only after the form is sent
+
+function showDone(d) {
+  const done = document.getElementById("done");
+  if (BOOKING_URL) {
+    const notes = [
+      "Based in: " + d.based, "Runs per week: " + d.runs, "Goal: " + d.goal,
+      "Weekly distance: " + d.volume, "About: " + d.about, d.notes ? "Notes: " + d.notes : ""
+    ].filter(Boolean).join("\n").slice(0, 1500);
+    const u = new URL(BOOKING_URL);
+    u.searchParams.set("name", d.name); u.searchParams.set("email", d.email); u.searchParams.set("notes", notes);
+    document.getElementById("book").href = u.toString();
+  } else {
+    done.querySelectorAll("[data-book],[data-book-wrap]").forEach(e => e.hidden = true);
+    done.querySelector("[data-book-none]").hidden = false;
+  }
+  form.hidden = true; done.hidden = false;
+  done.scrollIntoView({ block: "center" });
+}
+
+const form = document.getElementById("form"), msg = document.getElementById("msg"), send = document.getElementById("send");
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+  msg.className = "msg"; msg.textContent = "";
+  const d = Object.fromEntries(new FormData(form).entries());
+  if (d.company) { showDone({}); return; }
+  const missing = ["name","email","based","runs","goal","volume","about"].filter(k => !(d[k] || "").trim());
+  if (missing.length || !/^\S+@\S+\.\S+$/.test(d.email || "")) {
+    msg.className = "msg err"; msg.textContent = missing.length ? "Fill in the fields above first." : "That email doesn't look right."; return;
+  }
+  delete d.company;
+  send.disabled = true; send.textContent = "Sending";
+  try {
+    const r = await fetch(WEBHOOK, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ ...d, source: location.hostname, submittedAt: new Date().toISOString() }) });
+    if (!r.ok) throw new Error(r.status);
+  } catch (err) {
+    // The answers still reach CJ through the booking's notes, so the applicant is never stuck.
+    console.warn("Application webhook failed:", err);
+  }
+  showDone(d);
+});
+</script>
+</body>
+</html>
