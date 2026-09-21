@@ -26,14 +26,13 @@
     .tag { display: inline-block; font-size: 11px; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 4px 9px; border-radius: 4px; background: #D6E128; color: #20240A; }
     .stat b { display: block; font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 800; font-size: 40px; line-height: 1; letter-spacing: -0.01em; font-variant-numeric: tabular-nums; }
     .stat span { font-size: 13px; color: #63665C; letter-spacing: 0.06em; text-transform: uppercase; font-weight: 600; }
-    .poster { position: relative; aspect-ratio: 9 / 16; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; justify-content: flex-end; padding: 14px; box-sizing: border-box; }
-    .poster .hookline { font-family: "Barlow Condensed", "Arial Narrow", sans-serif; font-weight: 700; font-size: 21px; line-height: 1.02; text-transform: uppercase; }
-    .poster .play { position: absolute; top: 12px; right: 12px; width: 40px; height: 40px; border-radius: 999px; display: flex; align-items: center; justify-content: center; }
+    .vid { position: relative; border-radius: 12px; overflow: hidden; background: #1A1D17; aspect-ratio: 9 / 16; }
+    .vid video { display: block; width: 100%; height: 100%; object-fit: cover; background: #1A1D17; }
     .ph { color: #8A5A00; background: #FFF3C4; border-radius: 4px; padding: 0 5px; font-weight: 600; }
 
     .workgrid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 32px; }
     .workcard { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 16px; align-items: start; }
-    .workcard .poster { max-width: 300px; }
+    .workcard .vid { max-width: 300px; }
     .aboutgrid { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 24px; align-items: start; }
     .steps { display: grid; grid-template-columns: repeat(1, minmax(0, 1fr)); gap: 2px; margin-top: 22px; }
     .step { padding: 16px 0; border-top: 1px solid #E0E2D6; display: flex; gap: 14px; align-items: baseline; }
@@ -60,11 +59,10 @@
       .section { padding: 96px 0; }
       .hero-h1 { font-size: 104px; }
       h2 { font-size: 52px; }
-      .poster .hookline { font-size: 22px; }
       .stat b { font-size: 52px; }
       .workgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 40px; }
-      .workcard { grid-template-columns: 210px 1fr; gap: 22px; align-items: center; }
-      .workcard .poster { max-width: none; }
+      .workcard { grid-template-columns: 220px 1fr; gap: 24px; align-items: start; }
+      .workcard .vid { max-width: none; }
       .aboutgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px; }
       .steps { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 24px; margin-top: 30px; }
       .step { flex-direction: column; gap: 8px; border-top: 3px solid #1A1D17; padding: 14px 0 0; }
@@ -115,14 +113,13 @@
       <div class="workgrid">
 
         <div class="workcard">
-          <a class="poster" href="[PWR VIDEO LINK]" style="background: #1A1D17; color: #F4F5F0;">
-            <div class="play" style="background: #D6E128;"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3 2L12 7L3 12V2Z" fill="#20240A"/></svg></div>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <span class="tag">4-point test</span>
-              <p class="hookline">I rate every running gel on 4 things.</p>
-            </div>
-          </a>
+          <div class="vid">
+            <video controls playsinline preload="none" poster="v/pwr.jpg" aria-label="PWR Endurance gel test">
+              <source src="v/pwr.mp4" type="video/mp4">
+            </video>
+          </div>
           <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span class="tag" style="align-self: flex-start;">4-point test</span>
             <h3>PWR Endurance</h3>
             <p style="color: #3A3D35;">The same 4 points on every gel I test. Consistency, packaging, price, taste, judged on camera.</p>
             <p style="font-size: 14px; color: #63665C;"><b style="color: #1A1D17;">Angle:</b> the skeptical tester. Made for a nutrition brand whose buyers care how a gel behaves at race pace, not what is on the label.</p>
@@ -130,38 +127,33 @@
         </div>
 
         <div class="workcard">
-          <a class="poster" href="[WHOOP VIDEO LINK]" style="background: #D6E128; color: #20240A;">
-            <div class="play" style="background: #1A1D17;"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3 2L12 7L3 12V2Z" fill="#D6E128"/></svg></div>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <span class="tag" style="background: #20240A; color: #D6E128;">Story</span>
-              <p class="hookline">I became a dad and trained like nothing changed.</p>
-            </div>
-          </a>
+          <div class="vid">
+            <video controls playsinline preload="none" poster="v/whoop.jpg" aria-label="Whoop recovery story">
+              <source src="v/whoop.mp4" type="video/mp4">
+            </video>
+          </div>
           <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span class="tag" style="align-self: flex-start;">Story</span>
             <h3>Whoop</h3>
             <p style="color: #3A3D35;">Burnout to fix to result. The product arrives as the answer, not the subject.</p>
             <p style="font-size: 14px; color: #63665C;"><b style="color: #1A1D17;">Angle:</b> the burnout story. Made for a recovery brand selling to athletes who treat rest as optional.</p>
           </div>
         </div>
 
-
         <div class="workcard">
-          <a class="poster" href="[EVO SL VIDEO LINK]" style="background: #3A3D35; color: #F4F5F0;">
-            <div class="play" style="background: #D6E128;"><svg width="15" height="15" viewBox="0 0 14 14" fill="none"><path d="M3 2L12 7L3 12V2Z" fill="#20240A"/></svg></div>
-            <div style="display: flex; flex-direction: column; gap: 8px;">
-              <span class="tag">Expert demo</span>
-              <p class="hookline">One shoe for every run. I didn&rsquo;t believe it either.</p>
-            </div>
-          </a>
+          <div class="vid">
+            <video controls playsinline preload="none" poster="v/evosl.jpg" aria-label="Adidas Evo SL review">
+              <source src="v/evosl.mp4" type="video/mp4">
+            </video>
+          </div>
           <div style="display: flex; flex-direction: column; gap: 10px;">
+            <span class="tag" style="align-self: flex-start;">Expert demo</span>
             <h3>Adidas Evo SL</h3>
             <p style="color: #3A3D35;">Easy runs, intervals, race day. One shoe doing three jobs, shown at all three paces.</p>
             <p style="font-size: 14px; color: #63665C;"><b style="color: #1A1D17;">Angle:</b> the versatility case. Made for a shoe brand selling to runners who can only justify one pair this year.</p>
           </div>
         </div>
       </div>
-
-      <p style="margin-top: 32px; font-size: 14px; color: #63665C;">Raw footage and clean exports in the <a href="[DRIVE FOLDER LINK]" style="text-decoration: underline;">portfolio folder</a>. More formats in production.</p>
     </div>
   </div>
 
